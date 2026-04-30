@@ -14,10 +14,17 @@ const PORT = process.env.PORT || 5000;
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 1000, // generous limit for development
+  max: 1000000, // Maximum limit for development
   standardHeaders: true,
   legacyHeaders: false,
+  handler: (req, res, next, options) => {
+    res.status(options.statusCode).json({ error: 'Too many requests, please try again later.' });
+  }
 });
+
+// Trust proxy is required if you are behind a reverse proxy (like Render, Vercel, Heroku)
+// This prevents all requests from being seen as coming from the same IP
+app.set('trust proxy', 1);
 
 // Middleware
 app.use(limiter);
