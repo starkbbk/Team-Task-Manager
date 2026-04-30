@@ -37,7 +37,7 @@ const Login = () => {
           <div className="absolute top-10 left-10">
             <div className="px-6 py-2 bg-white rounded-full border border-slate-200 shadow-sm flex items-center gap-2">
               <div className="w-6 h-6 bg-amber-500 rounded-full"></div>
-              <span className="font-semibold text-slate-700">Crextio</span>
+              <span className="font-semibold text-slate-700">Team Task Manager</span>
             </div>
           </div>
 
