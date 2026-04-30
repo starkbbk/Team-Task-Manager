@@ -42,7 +42,7 @@ body {
   }
 
   .glass-card-hover {
-    @apply glass-card transition-all duration-400 hover:shadow-xl hover:shadow-primary-500/5 hover:-translate-y-1;
+    @apply glass-card transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/5 hover:-translate-y-1;
   }
 
   .sidebar-glass {
