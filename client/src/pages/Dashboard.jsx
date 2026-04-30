@@ -121,7 +121,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="bg-white rounded-[32px] p-8 shadow-sm flex flex-col justify-center items-center text-center">
+        <div className="bg-white dark:bg-slate-800 rounded-[32px] p-8 shadow-sm flex flex-col justify-center items-center text-center">
           <p className="text-slate-400 font-bold text-sm mb-6 max-w-[180px]">
             Have more projects to manage?
           </p>
@@ -134,13 +134,13 @@ const Dashboard = () => {
           </button>
           
           <div className="grid grid-cols-2 gap-4 w-full">
-            <div className="p-4 bg-slate-50 rounded-2xl">
+            <div className="p-4 bg-slate-50 dark:bg-slate-700 rounded-2xl">
               <p className="text-[10px] font-bold text-[#00a3ff] uppercase tracking-wider mb-1">In Progress</p>
-              <p className="text-3xl font-extrabold text-slate-800">{stats.inProgressCount + stats.todoCount}</p>
+              <p className="text-3xl font-extrabold text-slate-800 dark:text-slate-100">{stats.inProgressCount + stats.todoCount}</p>
             </div>
-            <div className="p-4 bg-slate-50 rounded-2xl">
+            <div className="p-4 bg-slate-50 dark:bg-slate-700 rounded-2xl">
               <p className="text-[10px] font-bold text-emerald-500 uppercase tracking-wider mb-1">Completed</p>
-              <p className="text-3xl font-extrabold text-slate-800">{stats.doneCount}</p>
+              <p className="text-3xl font-extrabold text-slate-800 dark:text-slate-100">{stats.doneCount}</p>
             </div>
           </div>
         </div>
@@ -152,7 +152,7 @@ const Dashboard = () => {
         {/* Recent Projects (List) */}
         <div className="lg:col-span-1 space-y-6">
           <div className="flex justify-between items-center">
-            <h2 className="text-xl font-bold text-slate-800">Recent Projects</h2>
+            <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">Recent Projects</h2>
             <button 
               onClick={() => nav('/projects')}
               className="text-xs font-bold text-slate-400 hover:text-amber-500 transition-colors"
@@ -163,7 +163,7 @@ const Dashboard = () => {
           
           <div className="space-y-4">
             {loading ? (
-              [1,2,3,4].map(i => <div key={i} className="h-20 bg-slate-100 rounded-2xl animate-pulse"></div>)
+              [1,2,3,4].map(i => <div key={i} className="h-20 bg-slate-100 dark:bg-slate-700 rounded-2xl animate-pulse"></div>)
             ) : projects.length === 0 ? (
               <p className="text-slate-400 text-sm">No projects found. Create one to get started!</p>
             ) : (
@@ -171,19 +171,19 @@ const Dashboard = () => {
                 <div 
                   key={project.id} 
                   onClick={() => nav(`/projects/${project.id}`)}
-                  className="bg-white p-4 rounded-2xl shadow-sm flex items-center gap-4 hover:shadow-md transition-shadow cursor-pointer group"
+                  className="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm flex items-center gap-4 hover:shadow-md transition-shadow cursor-pointer group"
                 >
                   <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-white text-lg
                     ${index === 0 ? 'bg-amber-400' : index === 1 ? 'bg-pink-500' : index === 2 ? 'bg-emerald-400' : 'bg-blue-500'}`}>
                     {project.name.charAt(0).toUpperCase()}
                   </div>
                   <div className="flex-1">
-                    <p className="font-bold text-slate-800 group-hover:text-amber-600 transition-colors">{project.name}</p>
+                    <p className="font-bold text-slate-800 dark:text-slate-200 group-hover:text-amber-600 transition-colors">{project.name}</p>
                     <p className="text-xs text-slate-400 font-medium">{project._count?.tasks || 0} Tasks</p>
                   </div>
                   <button 
                     onClick={(e) => { e.stopPropagation(); nav(`/projects/${project.id}`); }}
-                    className="text-amber-500 bg-amber-50 px-3 py-1.5 rounded-lg text-[10px] font-bold hover:bg-amber-100 transition-colors"
+                    className="text-amber-500 bg-amber-50 dark:bg-amber-500/15 px-3 py-1.5 rounded-lg text-[10px] font-bold hover:bg-amber-100 dark:hover:bg-amber-500/25 transition-colors"
                   >
                     View
                   </button>
@@ -197,17 +197,17 @@ const Dashboard = () => {
         {/* Activity Chart */}
         <div className="lg:col-span-1 space-y-6">
           <div className="flex justify-between items-center">
-            <h2 className="text-xl font-bold text-slate-800">Current Activity</h2>
+            <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">Current Activity</h2>
           </div>
-          <div className="bg-white p-8 rounded-[32px] shadow-sm h-full flex flex-col">
+          <div className="bg-white dark:bg-slate-800 p-8 rounded-[32px] shadow-sm h-full flex flex-col">
             <div className="flex justify-between items-start mb-6">
               <div>
-                <p className="font-bold text-slate-800">Weekly Progress</p>
+                <p className="font-bold text-slate-800 dark:text-slate-200">Weekly Progress</p>
                 <p className="text-[10px] text-slate-400 font-medium">This is the latest Improvement</p>
               </div>
               <div 
                 onClick={() => nav('/calendar')}
-                className="w-8 h-8 bg-blue-50 text-blue-500 rounded-lg flex items-center justify-center cursor-pointer hover:bg-blue-100 transition-colors"
+                className="w-8 h-8 bg-blue-50 dark:bg-blue-500/15 text-blue-500 rounded-lg flex items-center justify-center cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-500/25 transition-colors"
               >
                 <CalendarIcon size={16} />
               </div>
@@ -256,7 +256,7 @@ const Dashboard = () => {
         {/* Team Members */}
         <div className="lg:col-span-1 space-y-6">
           <div className="flex justify-between items-center">
-            <h2 className="text-xl font-bold text-slate-800">Best Performers</h2>
+            <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">Best Performers</h2>
             <button 
               onClick={() => nav('/analytics')}
               className="text-xs font-bold text-slate-400 hover:text-amber-500 transition-colors"
@@ -265,7 +265,7 @@ const Dashboard = () => {
             </button>
           </div>
           
-          <div className="bg-white p-4 rounded-[32px] shadow-sm divide-y divide-slate-50">
+          <div className="bg-white dark:bg-slate-800 p-4 rounded-[32px] shadow-sm divide-y divide-slate-50 dark:divide-slate-700">
             {/* Show real project members if available, otherwise show placeholder */}
             {(() => {
               const allMembers = [];
@@ -286,12 +286,12 @@ const Dashboard = () => {
                       <img src={`https://i.pravatar.cc/100?u=${m.userId}`} alt="User" />
                     </div>
                     <div className="flex-1">
-                      <p className="font-bold text-sm text-slate-800">{m.user.name}</p>
+                      <p className="font-bold text-sm text-slate-800 dark:text-slate-200">{m.user.name}</p>
                       <p className="text-[10px] text-slate-400 font-semibold">{m.role}</p>
                     </div>
                     <button 
                       onClick={() => nav('/settings')}
-                      className="text-[10px] font-bold text-slate-400 border border-slate-200 px-3 py-1.5 rounded-lg hover:bg-slate-50 transition-colors"
+                      className="text-[10px] font-bold text-slate-400 border border-slate-200 dark:border-slate-600 px-3 py-1.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
                     >
                       Profile
                     </button>
@@ -306,14 +306,14 @@ const Dashboard = () => {
                     <img src={`https://i.pravatar.cc/100?u=${i+10}`} alt="User" />
                   </div>
                   <div className="flex-1">
-                    <p className="font-bold text-sm text-slate-800">
+                    <p className="font-bold text-sm text-slate-800 dark:text-slate-200">
                       {i === 1 ? 'Nil Yeager' : i === 2 ? 'Theron Trump' : i === 3 ? 'Tyler Mark' : 'Johen Mark'}
                     </p>
                     <p className="text-[10px] text-slate-400 font-semibold">{i + 2} Tasks completed</p>
                   </div>
                   <button 
                     onClick={() => nav('/settings')}
-                    className="text-[10px] font-bold text-slate-400 border border-slate-200 px-3 py-1.5 rounded-lg hover:bg-slate-50 transition-colors"
+                    className="text-[10px] font-bold text-slate-400 border border-slate-200 dark:border-slate-600 px-3 py-1.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors"
                   >
                     Profile
                   </button>
@@ -322,12 +322,12 @@ const Dashboard = () => {
             })()}
           </div>
 
-          <div className="bg-white p-6 rounded-[32px] shadow-sm">
+          <div className="bg-white dark:bg-slate-800 p-6 rounded-[32px] shadow-sm">
              <div className="flex justify-between items-center">
-                <p className="text-sm font-bold text-slate-800">Content Usage</p>
+                <p className="text-sm font-bold text-slate-800 dark:text-slate-200">Content Usage</p>
                 <MoreVertical size={16} className="text-slate-300" />
              </div>
-             <div className="mt-4 h-2 bg-slate-100 rounded-full overflow-hidden">
+             <div className="mt-4 h-2 bg-slate-100 dark:bg-slate-700 rounded-full overflow-hidden">
                 <div className="h-full bg-amber-400 rounded-full transition-all duration-1000" style={{ width: `${stats.totalTasks > 0 ? Math.round((stats.doneCount / stats.totalTasks) * 100) : 0}%` }}></div>
              </div>
              <p className="text-[10px] text-slate-400 font-bold mt-2">{stats.totalTasks > 0 ? Math.round((stats.doneCount / stats.totalTasks) * 100) : 0}% tasks completed</p>

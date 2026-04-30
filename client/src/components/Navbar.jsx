@@ -1,26 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Bell, MessageCircle, Moon, Sun, Maximize, Settings2, Menu } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 
 const Navbar = ({ toggleSidebar }) => {
   const { user } = useAuth();
+  const { isDark, toggleTheme } = useTheme();
   const nav = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
-  const [isDark, setIsDark] = useState(false);
   const [showNotif, setShowNotif] = useState(false);
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      // Navigate to projects page which shows project listings
       nav('/projects');
     }
-  };
-
-  const toggleDarkMode = () => {
-    setIsDark(!isDark);
-    document.documentElement.classList.toggle('dark');
   };
 
   const toggleFullscreen = () => {
@@ -38,12 +33,12 @@ const Navbar = ({ toggleSidebar }) => {
   ];
 
   return (
-    <header className="h-20 bg-white border-b border-slate-100 flex items-center justify-between px-6 sticky top-0 z-40">
+    <header className="h-20 bg-white dark:bg-slate-800 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between px-6 sticky top-0 z-40 transition-colors duration-300">
       <div className="flex items-center gap-4 flex-1">
         {/* Mobile Menu Toggle */}
         <button 
           onClick={toggleSidebar}
-          className="md:hidden p-2 text-slate-500 hover:bg-slate-50 rounded-lg transition-colors"
+          className="md:hidden p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors"
         >
           <Menu size={24} />
         </button>
@@ -56,7 +51,7 @@ const Navbar = ({ toggleSidebar }) => {
             placeholder="Search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full bg-[#f8fafc] border-none rounded-xl py-2.5 pl-12 pr-4 text-sm text-slate-600 focus:ring-2 focus:ring-amber-500/10 outline-none transition-all"
+            className="w-full bg-[#f8fafc] dark:bg-slate-700 border-none rounded-xl py-2.5 pl-12 pr-4 text-sm text-slate-600 dark:text-slate-200 focus:ring-2 focus:ring-amber-500/10 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500"
           />
         </form>
       </div>
@@ -65,8 +60,8 @@ const Navbar = ({ toggleSidebar }) => {
       <div className="flex items-center gap-2 md:gap-4">
         <div className="flex items-center gap-1 md:gap-2">
           <button 
-            onClick={toggleDarkMode}
-            className="p-2.5 text-slate-500 hover:bg-slate-50 rounded-full transition-all"
+            onClick={(e) => toggleTheme(e)}
+            className="p-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-full transition-all"
             title={isDark ? 'Light mode' : 'Dark mode'}
           >
             {isDark ? <Sun size={20} /> : <Moon size={20} />}
@@ -74,28 +69,28 @@ const Navbar = ({ toggleSidebar }) => {
           <div className="relative">
             <button 
               onClick={() => setShowNotif(!showNotif)}
-              className="p-2.5 text-slate-500 hover:bg-slate-50 rounded-full transition-all relative"
+              className="p-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-full transition-all relative"
             >
               <Bell size={20} />
-              <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+              <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-800"></span>
             </button>
             {/* Notification Dropdown */}
             {showNotif && (
               <>
                 <div className="fixed inset-0 z-40" onClick={() => setShowNotif(false)} />
-                <div className="absolute right-0 top-12 w-80 bg-white rounded-2xl shadow-xl border border-slate-100 z-50 overflow-hidden">
-                  <div className="p-4 border-b border-slate-100">
-                    <p className="font-bold text-sm text-slate-800">Notifications</p>
+                <div className="absolute right-0 top-12 w-80 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 z-50 overflow-hidden">
+                  <div className="p-4 border-b border-slate-100 dark:border-slate-700">
+                    <p className="font-bold text-sm text-slate-800 dark:text-slate-200">Notifications</p>
                   </div>
                   <div className="max-h-64 overflow-y-auto">
                     {notifications.map(n => (
-                      <div key={n.id} className="px-4 py-3 hover:bg-slate-50 cursor-pointer transition-colors border-b border-slate-50 last:border-0">
-                        <p className="text-sm text-slate-700">{n.text}</p>
+                      <div key={n.id} className="px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer transition-colors border-b border-slate-50 dark:border-slate-700 last:border-0">
+                        <p className="text-sm text-slate-700 dark:text-slate-300">{n.text}</p>
                         <p className="text-[10px] text-slate-400 mt-1">{n.time}</p>
                       </div>
                     ))}
                   </div>
-                  <div className="p-3 border-t border-slate-100">
+                  <div className="p-3 border-t border-slate-100 dark:border-slate-700">
                     <button 
                       onClick={() => { setShowNotif(false); nav('/settings'); }}
                       className="text-xs font-bold text-amber-500 hover:text-amber-600 w-full text-center"
@@ -109,14 +104,14 @@ const Navbar = ({ toggleSidebar }) => {
           </div>
           <button 
             onClick={() => nav('/chat')}
-            className="p-2.5 text-slate-500 hover:bg-slate-50 rounded-full transition-all hidden sm:flex"
+            className="p-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-full transition-all hidden sm:flex"
             title="Chat"
           >
             <MessageCircle size={20} />
           </button>
           <button 
             onClick={toggleFullscreen}
-            className="p-2.5 text-slate-500 hover:bg-slate-50 rounded-full transition-all hidden md:flex"
+            className="p-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-full transition-all hidden md:flex"
             title="Fullscreen"
           >
             <Maximize size={20} />
@@ -124,14 +119,14 @@ const Navbar = ({ toggleSidebar }) => {
         </div>
 
         {/* User Profile */}
-        <div className="flex items-center gap-3 pl-4 border-l border-slate-100 ml-2">
+        <div className="flex items-center gap-3 pl-4 border-l border-slate-100 dark:border-slate-700 ml-2">
           <div className="text-right hidden sm:block">
-            <p className="text-sm font-bold text-slate-800 leading-none mb-1">{user?.name || 'User'}</p>
+            <p className="text-sm font-bold text-slate-800 dark:text-slate-200 leading-none mb-1">{user?.name || 'User'}</p>
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Admin</p>
           </div>
           <div 
             onClick={() => nav('/settings')}
-            className="w-10 h-10 rounded-full bg-amber-100 border-2 border-amber-500/20 overflow-hidden cursor-pointer hover:border-amber-500/50 transition-colors"
+            className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 border-2 border-amber-500/20 overflow-hidden cursor-pointer hover:border-amber-500/50 transition-colors"
           >
             <img 
               src={`https://i.pravatar.cc/150?u=${user?.id || 'admin'}`} 
@@ -141,7 +136,7 @@ const Navbar = ({ toggleSidebar }) => {
           </div>
           <button 
             onClick={() => nav('/settings')}
-            className="p-2 text-slate-400 hover:text-slate-600"
+            className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
             title="Settings"
           >
             <Settings2 size={18} />

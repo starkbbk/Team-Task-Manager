@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -50,7 +51,7 @@ const AppLayout = ({ children }) => {
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] flex">
+    <div className="min-h-screen bg-[#f8fafc] dark:bg-slate-900 flex transition-colors duration-300">
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       <div className="flex-1 flex flex-col md:ml-24 transition-all duration-300">
         <Navbar toggleSidebar={toggleSidebar} />
@@ -64,6 +65,7 @@ const AppLayout = ({ children }) => {
 
 function App() {
   return (
+    <ThemeProvider>
     <AuthProvider>
       <Router>
         <Toaster
@@ -143,6 +145,7 @@ function App() {
         </Routes>
       </Router>
     </AuthProvider>
+    </ThemeProvider>
   );
 }
 
