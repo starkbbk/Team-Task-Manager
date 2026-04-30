@@ -26,24 +26,24 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-dark-900 bg-mesh px-4">
-      <div className="w-full max-w-md animate-fade-in">
+    <div className="min-h-screen flex items-center justify-center bg-theme-bg bg-mesh px-4">
+      <div className="w-full max-w-md animate-fade-in py-10">
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-2xl shadow-primary-500/20">
-            <span className="text-white font-bold text-xl">TM</span>
+        <div className="text-center mb-10">
+          <div className="w-20 h-20 bg-gradient-to-br from-[#ff7e1a] to-[#f0670d] rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-primary-500/30 active:scale-95 transition-transform duration-300">
+            <span className="text-white font-bold text-2xl">TM</span>
           </div>
-          <h1 className="text-3xl font-bold text-dark-100 mb-2">Welcome back</h1>
-          <p className="text-dark-400">Sign in to your account to continue</p>
+          <h1 className="text-4xl font-extrabold text-[#2d2d2d] mb-3 tracking-tight">Welcome back</h1>
+          <p className="text-[#6b6b6b] text-lg font-medium">Sign in to your account to continue</p>
         </div>
 
         {/* Form */}
         <div className="glass-card p-8">
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-dark-300 mb-2">Email</label>
-              <div className="relative">
-                <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-dark-500" />
+              <label className="block text-sm font-semibold text-[#2d2d2d] mb-2.5 ml-1">Email</label>
+              <div className="relative group">
+                <Mail size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#949494] group-focus-within:text-[#ff7e1a] transition-colors" />
                 <input
                   id="login-email"
                   type="email"
@@ -57,9 +57,9 @@ const Login = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-dark-300 mb-2">Password</label>
-              <div className="relative">
-                <Lock size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-dark-500" />
+              <label className="block text-sm font-semibold text-[#2d2d2d] mb-2.5 ml-1">Password</label>
+              <div className="relative group">
+                <Lock size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#949494] group-focus-within:text-[#ff7e1a] transition-colors" />
                 <input
                   id="login-password"
                   type={showPassword ? 'text' : 'password'}
@@ -72,9 +72,9 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-dark-500 hover:text-dark-300 transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-[#949494] hover:text-[#2d2d2d] transition-colors"
                 >
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
                 </button>
               </div>
             </div>
@@ -96,10 +96,10 @@ const Login = () => {
             </button>
           </form>
 
-          <div className="mt-6 text-center">
-            <p className="text-sm text-dark-400">
+          <div className="mt-8 text-center">
+            <p className="text-sm text-[#6b6b6b] font-medium">
               Don't have an account?{' '}
-              <Link to="/signup" className="text-primary-400 hover:text-primary-300 font-medium transition-colors">
+              <Link to="/signup" className="text-[#ff7e1a] hover:text-[#f0670d] font-bold transition-colors ml-1">
                 Create one
               </Link>
             </p>
