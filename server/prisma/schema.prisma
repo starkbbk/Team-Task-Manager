@@ -4,7 +4,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -40,7 +40,7 @@ model ProjectMember {
   id        String   @id @default(uuid())
   projectId String
   userId    String
-  role      Role     @default(MEMBER)
+  role      String   @default("MEMBER")
   joinedAt  DateTime @default(now())
 
   project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
@@ -55,8 +55,8 @@ model Task {
   id          String   @id @default(uuid())
   title       String
   description String?
-  priority    Priority @default(MEDIUM)
-  status      Status   @default(TODO)
+  priority    String   @default("MEDIUM")
+  status      String   @default("TODO")
   dueDate     DateTime?
   projectId   String
   assigneeId  String?
@@ -68,21 +68,4 @@ model Task {
 
   @@index([projectId])
   @@index([assigneeId])
-}
-
-enum Role {
-  ADMIN
-  MEMBER
-}
-
-enum Priority {
-  LOW
-  MEDIUM
-  HIGH
-}
-
-enum Status {
-  TODO
-  IN_PROGRESS
-  DONE
 }
