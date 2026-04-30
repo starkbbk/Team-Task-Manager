@@ -3,11 +3,9 @@
   "version": "1.0.0",
   "description": "Team Task Manager - Full Stack Application",
   "scripts": {
-    "install:all": "cd server && npm install && cd ../client && npm install",
-    "dev:server": "cd server && npm run dev",
-    "dev:client": "cd client && npm run dev",
-    "build": "cd server && npm run build && cd ../client && npm run build",
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "build": "cd client && npm install && npm run build && cd ../server && npm install && npm run build",
     "start": "cd server && npm start",
-    "postinstall": "cd server && npm install && cd ../client && npm install"
+    "postinstall": "cd server && npx prisma generate"
   }
 }

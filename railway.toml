@@ -1,12 +1,9 @@
 [build]
 builder = "NIXPACKS"
 
-[build.env]
-NIXPACKS_BUILD_CMD = "cd server && npm install && npx prisma generate && cd ../client && npm install && npm run build"
-
 [deploy]
-startCommand = "cd server && npx prisma migrate deploy && node src/index.js"
-restartPolicyType = "ON_FAILURE"
-restartPolicyMaxRetries = 10
+startCommand = "npm start"
 healthCheckPath = "/api/health"
 healthCheckTimeout = 100
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
