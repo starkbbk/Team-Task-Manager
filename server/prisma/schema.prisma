@@ -17,8 +17,9 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  projects ProjectMember[]
-  tasks    Task[]          @relation("TaskAssignee")
+  ownedProjects Project[]       @relation("ProjectOwner")
+  projects      ProjectMember[]
+  tasks         Task[]          @relation("TaskAssignee")
 }
 
 model Project {
@@ -29,8 +30,11 @@ model Project {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  owner   User            @relation("ProjectOwner", fields: [ownerId], references: [id], onDelete: Cascade)
   members ProjectMember[]
   tasks   Task[]
+
+  @@index([ownerId])
 }
 
 model ProjectMember {
