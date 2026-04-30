@@ -7,6 +7,12 @@ import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
 import ProjectDetail from './pages/ProjectDetail';
+import Messages from './pages/Messages';
+import Chat from './pages/Chat';
+import Tasks from './pages/Tasks';
+import CalendarPage from './pages/CalendarPage';
+import Analytics from './pages/Analytics';
+import Settings from './pages/Settings';
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -100,6 +106,36 @@ function App() {
           <Route path="/projects/:id" element={
             <ProtectedRoute>
               <AppLayout><ProjectDetail /></AppLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/messages" element={
+            <ProtectedRoute>
+              <AppLayout><Messages /></AppLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/chat" element={
+            <ProtectedRoute>
+              <AppLayout><Chat /></AppLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/tasks" element={
+            <ProtectedRoute>
+              <AppLayout><Tasks /></AppLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/calendar" element={
+            <ProtectedRoute>
+              <AppLayout><CalendarPage /></AppLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/analytics" element={
+            <ProtectedRoute>
+              <AppLayout><Analytics /></AppLayout>
+            </ProtectedRoute>
+          } />
+          <Route path="/settings" element={
+            <ProtectedRoute>
+              <AppLayout><Settings /></AppLayout>
             </ProtectedRoute>
           } />
           <Route path="/" element={<Navigate to="/dashboard" replace />} />

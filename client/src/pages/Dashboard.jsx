@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { projectAPI } from '../api';
+import { useNavigate } from 'react-router-dom';
+import { projectAPI, dashboardAPI } from '../api';
 import { 
   Users, 
   ArrowUpRight, 
@@ -9,26 +10,64 @@ import {
   PlayCircle
 } from 'lucide-react';
 import toast from 'react-hot-toast';
+import Modal from '../components/Modal';
 
 const Dashboard = () => {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState({ totalTasks: 0, doneCount: 0, inProgressCount: 0, todoCount: 0, totalProjects: 0 });
+  const [showCreate, setShowCreate] = useState(false);
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [creating, setCreating] = useState(false);
+  const nav = useNavigate();
 
   useEffect(() => {
     fetchProjects();
+    fetchDashboardStats();
   }, []);
 
   const fetchProjects = async () => {
     try {
-      const response = await projectAPI.getProjects();
+      const response = await projectAPI.getAll();
       setProjects(response.data.projects);
     } catch (error) {
       console.error('Fetch projects error:', error);
-      toast.error('Failed to load recent activity.');
     } finally {
       setLoading(false);
     }
   };
+
+  const fetchDashboardStats = async () => {
+    try {
+      const response = await dashboardAPI.get();
+      setStats(response.data.stats);
+    } catch (error) {
+      console.error('Dashboard stats error:', error);
+    }
+  };
+
+  const handleCreate = async (e) => {
+    e.preventDefault();
+    setCreating(true);
+    try {
+      await projectAPI.create({ name, description });
+      toast.success('Project created!');
+      setShowCreate(false);
+      setName(''); setDescription('');
+      fetchProjects();
+      fetchDashboardStats();
+    } catch (err) {
+      toast.error(err.response?.data?.error || 'Failed to create project');
+    } finally {
+      setCreating(false);
+    }
+  };
+
+  // Calculate active member count from all projects
+  const activeMemberCount = new Set(
+    projects.flatMap(p => (p.members || []).map(m => m.userId))
+  ).size;
 
   const activityData = [
     { month: 'Jan', value: 20 },
@@ -58,7 +97,7 @@ const Dashboard = () => {
                   <Users className="text-white" size={20} />
                 </div>
                 <div>
-                  <p className="text-white font-bold text-xl">12+</p>
+                  <p className="text-white font-bold text-xl">{activeMemberCount || '0'}+</p>
                   <p className="text-white/60 text-xs font-semibold">Active Members</p>
                 </div>
               </div>
@@ -67,7 +106,7 @@ const Dashboard = () => {
                   <ArrowUpRight className="text-white" size={20} />
                 </div>
                 <div>
-                  <p className="text-white font-bold text-xl">200+</p>
+                  <p className="text-white font-bold text-xl">{stats.doneCount || '0'}+</p>
                   <p className="text-white/60 text-xs font-semibold">Tasks Completed</p>
                 </div>
               </div>
@@ -86,7 +125,10 @@ const Dashboard = () => {
           <p className="text-slate-400 font-bold text-sm mb-6 max-w-[180px]">
             Have more projects to manage?
           </p>
-          <button className="bg-[#00a3ff] hover:bg-[#0088d6] text-white w-full py-4 rounded-xl flex items-center justify-center gap-2 font-bold transition-all shadow-lg shadow-blue-500/20 active:scale-[0.98] mb-8">
+          <button 
+            onClick={() => setShowCreate(true)}
+            className="bg-[#00a3ff] hover:bg-[#0088d6] text-white w-full py-4 rounded-xl flex items-center justify-center gap-2 font-bold transition-all shadow-lg shadow-blue-500/20 active:scale-[0.98] mb-8"
+          >
             <Plus size={20} />
             <span>Create New Project</span>
           </button>
@@ -94,11 +136,11 @@ const Dashboard = () => {
           <div className="grid grid-cols-2 gap-4 w-full">
             <div className="p-4 bg-slate-50 rounded-2xl">
               <p className="text-[10px] font-bold text-[#00a3ff] uppercase tracking-wider mb-1">In Progress</p>
-              <p className="text-3xl font-extrabold text-slate-800">{projects.length}</p>
+              <p className="text-3xl font-extrabold text-slate-800">{stats.inProgressCount + stats.todoCount}</p>
             </div>
             <div className="p-4 bg-slate-50 rounded-2xl">
               <p className="text-[10px] font-bold text-emerald-500 uppercase tracking-wider mb-1">Completed</p>
-              <p className="text-3xl font-extrabold text-slate-800">25</p>
+              <p className="text-3xl font-extrabold text-slate-800">{stats.doneCount}</p>
             </div>
           </div>
         </div>
@@ -111,7 +153,12 @@ const Dashboard = () => {
         <div className="lg:col-span-1 space-y-6">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-bold text-slate-800">Recent Projects</h2>
-            <button className="text-xs font-bold text-slate-400 hover:text-amber-500 transition-colors">See All</button>
+            <button 
+              onClick={() => nav('/projects')}
+              className="text-xs font-bold text-slate-400 hover:text-amber-500 transition-colors"
+            >
+              See All
+            </button>
           </div>
           
           <div className="space-y-4">
@@ -121,7 +168,11 @@ const Dashboard = () => {
               <p className="text-slate-400 text-sm">No projects found. Create one to get started!</p>
             ) : (
               projects.slice(0, 4).map((project, index) => (
-                <div key={project.id} className="bg-white p-4 rounded-2xl shadow-sm flex items-center gap-4 hover:shadow-md transition-shadow cursor-pointer group">
+                <div 
+                  key={project.id} 
+                  onClick={() => nav(`/projects/${project.id}`)}
+                  className="bg-white p-4 rounded-2xl shadow-sm flex items-center gap-4 hover:shadow-md transition-shadow cursor-pointer group"
+                >
                   <div className={`w-12 h-12 rounded-2xl flex items-center justify-center font-bold text-white text-lg
                     ${index === 0 ? 'bg-amber-400' : index === 1 ? 'bg-pink-500' : index === 2 ? 'bg-emerald-400' : 'bg-blue-500'}`}>
                     {project.name.charAt(0).toUpperCase()}
@@ -130,7 +181,10 @@ const Dashboard = () => {
                     <p className="font-bold text-slate-800 group-hover:text-amber-600 transition-colors">{project.name}</p>
                     <p className="text-xs text-slate-400 font-medium">{project._count?.tasks || 0} Tasks</p>
                   </div>
-                  <button className="text-amber-500 bg-amber-50 px-3 py-1.5 rounded-lg text-[10px] font-bold hover:bg-amber-100 transition-colors">
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); nav(`/projects/${project.id}`); }}
+                    className="text-amber-500 bg-amber-50 px-3 py-1.5 rounded-lg text-[10px] font-bold hover:bg-amber-100 transition-colors"
+                  >
                     View
                   </button>
                   <MoreVertical size={16} className="text-slate-300" />
@@ -151,7 +205,10 @@ const Dashboard = () => {
                 <p className="font-bold text-slate-800">Weekly Progress</p>
                 <p className="text-[10px] text-slate-400 font-medium">This is the latest Improvement</p>
               </div>
-              <div className="w-8 h-8 bg-blue-50 text-blue-500 rounded-lg flex items-center justify-center">
+              <div 
+                onClick={() => nav('/calendar')}
+                className="w-8 h-8 bg-blue-50 text-blue-500 rounded-lg flex items-center justify-center cursor-pointer hover:bg-blue-100 transition-colors"
+              >
                 <CalendarIcon size={16} />
               </div>
             </div>
@@ -172,15 +229,21 @@ const Dashboard = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-4 mt-8">
-              <div className="bg-amber-400 p-4 rounded-2xl relative overflow-hidden group cursor-pointer">
-                <p className="text-white font-bold text-lg leading-none">12</p>
+              <div 
+                onClick={() => nav('/tasks')}
+                className="bg-amber-400 p-4 rounded-2xl relative overflow-hidden group cursor-pointer hover:bg-amber-500 transition-colors"
+              >
+                <p className="text-white font-bold text-lg leading-none">{stats.todoCount + stats.inProgressCount}</p>
                 <p className="text-white/70 text-[8px] font-bold uppercase mt-1">Pending Tasks</p>
                 <div className="absolute right-2 bottom-2 w-6 h-6 bg-white/20 rounded-full flex items-center justify-center text-white">
                   <ArrowUpRight size={12} />
                 </div>
               </div>
-              <div className="bg-pink-500 p-4 rounded-2xl relative overflow-hidden group cursor-pointer">
-                <p className="text-white font-bold text-lg leading-none">8</p>
+              <div 
+                onClick={() => nav('/tasks')}
+                className="bg-pink-500 p-4 rounded-2xl relative overflow-hidden group cursor-pointer hover:bg-pink-600 transition-colors"
+              >
+                <p className="text-white font-bold text-lg leading-none">{stats.todoCount}</p>
                 <p className="text-white/70 text-[8px] font-bold uppercase mt-1">New Tasks</p>
                 <div className="absolute right-2 bottom-2 w-6 h-6 bg-white/20 rounded-full flex items-center justify-center text-white">
                   <PlayCircle size={12} />
@@ -194,26 +257,69 @@ const Dashboard = () => {
         <div className="lg:col-span-1 space-y-6">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-bold text-slate-800">Best Performers</h2>
-            <button className="text-xs font-bold text-slate-400 hover:text-amber-500 transition-colors">See All</button>
+            <button 
+              onClick={() => nav('/analytics')}
+              className="text-xs font-bold text-slate-400 hover:text-amber-500 transition-colors"
+            >
+              See All
+            </button>
           </div>
           
           <div className="bg-white p-4 rounded-[32px] shadow-sm divide-y divide-slate-50">
-            {[1,2,3,4].map((i) => (
-              <div key={i} className="py-4 flex items-center gap-4 first:pt-2 last:pb-2">
-                <div className="w-10 h-10 rounded-full overflow-hidden bg-slate-100">
-                  <img src={`https://i.pravatar.cc/100?u=${i+10}`} alt="User" />
+            {/* Show real project members if available, otherwise show placeholder */}
+            {(() => {
+              const allMembers = [];
+              const seen = new Set();
+              projects.forEach(p => {
+                (p.members || []).forEach(m => {
+                  if (!seen.has(m.userId)) {
+                    seen.add(m.userId);
+                    allMembers.push(m);
+                  }
+                });
+              });
+              
+              if (allMembers.length > 0) {
+                return allMembers.slice(0, 4).map((m, i) => (
+                  <div key={m.userId} className="py-4 flex items-center gap-4 first:pt-2 last:pb-2">
+                    <div className="w-10 h-10 rounded-full overflow-hidden bg-slate-100">
+                      <img src={`https://i.pravatar.cc/100?u=${m.userId}`} alt="User" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-bold text-sm text-slate-800">{m.user.name}</p>
+                      <p className="text-[10px] text-slate-400 font-semibold">{m.role}</p>
+                    </div>
+                    <button 
+                      onClick={() => nav('/settings')}
+                      className="text-[10px] font-bold text-slate-400 border border-slate-200 px-3 py-1.5 rounded-lg hover:bg-slate-50 transition-colors"
+                    >
+                      Profile
+                    </button>
+                  </div>
+                ));
+              }
+              
+              // Fallback placeholder members
+              return [1,2,3,4].map((i) => (
+                <div key={i} className="py-4 flex items-center gap-4 first:pt-2 last:pb-2">
+                  <div className="w-10 h-10 rounded-full overflow-hidden bg-slate-100">
+                    <img src={`https://i.pravatar.cc/100?u=${i+10}`} alt="User" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-bold text-sm text-slate-800">
+                      {i === 1 ? 'Nil Yeager' : i === 2 ? 'Theron Trump' : i === 3 ? 'Tyler Mark' : 'Johen Mark'}
+                    </p>
+                    <p className="text-[10px] text-slate-400 font-semibold">{i + 2} Tasks completed</p>
+                  </div>
+                  <button 
+                    onClick={() => nav('/settings')}
+                    className="text-[10px] font-bold text-slate-400 border border-slate-200 px-3 py-1.5 rounded-lg hover:bg-slate-50 transition-colors"
+                  >
+                    Profile
+                  </button>
                 </div>
-                <div className="flex-1">
-                  <p className="font-bold text-sm text-slate-800">
-                    {i === 1 ? 'Nil Yeager' : i === 2 ? 'Theron Trump' : i === 3 ? 'Tyler Mark' : 'Johen Mark'}
-                  </p>
-                  <p className="text-[10px] text-slate-400 font-semibold">{i + 2} Tasks completed</p>
-                </div>
-                <button className="text-[10px] font-bold text-slate-400 border border-slate-200 px-3 py-1.5 rounded-lg hover:bg-slate-50 transition-colors">
-                  Profile
-                </button>
-              </div>
-            ))}
+              ));
+            })()}
           </div>
 
           <div className="bg-white p-6 rounded-[32px] shadow-sm">
@@ -222,13 +328,47 @@ const Dashboard = () => {
                 <MoreVertical size={16} className="text-slate-300" />
              </div>
              <div className="mt-4 h-2 bg-slate-100 rounded-full overflow-hidden">
-                <div className="h-full bg-amber-400 w-3/4 rounded-full"></div>
+                <div className="h-full bg-amber-400 rounded-full transition-all duration-1000" style={{ width: `${stats.totalTasks > 0 ? Math.round((stats.doneCount / stats.totalTasks) * 100) : 0}%` }}></div>
              </div>
-             <p className="text-[10px] text-slate-400 font-bold mt-2">75% storage used</p>
+             <p className="text-[10px] text-slate-400 font-bold mt-2">{stats.totalTasks > 0 ? Math.round((stats.doneCount / stats.totalTasks) * 100) : 0}% tasks completed</p>
           </div>
         </div>
 
       </div>
+
+      {/* Create Project Modal */}
+      <Modal isOpen={showCreate} onClose={() => setShowCreate(false)} title="Create New Project">
+        <form onSubmit={handleCreate} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-dark-300 mb-2">Project Name</label>
+            <input 
+              id="project-name-input" 
+              value={name} 
+              onChange={e => setName(e.target.value)} 
+              className="input-field" 
+              placeholder="My Awesome Project" 
+              required 
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-dark-300 mb-2">Description (optional)</label>
+            <textarea 
+              id="project-desc-input" 
+              value={description} 
+              onChange={e => setDescription(e.target.value)} 
+              className="input-field resize-none" 
+              rows={3} 
+              placeholder="What's this project about?" 
+            />
+          </div>
+          <div className="flex gap-3 pt-2">
+            <button type="button" onClick={() => setShowCreate(false)} className="btn-secondary flex-1">Cancel</button>
+            <button type="submit" disabled={creating} className="btn-primary flex-1 flex items-center justify-center gap-2">
+              {creating ? <span className="animate-spin">⏳</span> : <><Plus size={18} /> Create</>}
+            </button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 };

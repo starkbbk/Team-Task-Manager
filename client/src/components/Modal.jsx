@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { X } from 'lucide-react';
 
 const Modal = ({ isOpen, onClose, title, children }) => {
@@ -8,17 +7,17 @@ const Modal = ({ isOpen, onClose, title, children }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-dark-950/80 backdrop-blur-sm"
+        className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm"
         onClick={onClose}
       />
       
       {/* Modal */}
-      <div className="relative w-full max-w-lg glass-card p-6 animate-scale-in max-h-[90vh] overflow-y-auto">
+      <div className="relative w-full max-w-lg bg-white rounded-[24px] p-6 shadow-2xl max-h-[90vh] overflow-y-auto animate-scale-in">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-dark-100">{title}</h2>
+          <h2 className="text-xl font-bold text-slate-800">{title}</h2>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-dark-400 hover:text-dark-200 hover:bg-dark-700 transition-colors"
+            className="p-2 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
           >
             <X size={20} />
           </button>

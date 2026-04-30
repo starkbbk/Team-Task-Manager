@@ -1,8 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
 * {
   margin: 0;
@@ -59,6 +59,12 @@ body {
     @apply bg-white hover:bg-[#f3ece4] text-[#2d2d2d] font-medium py-3 px-6 rounded-2xl 
            transition-all duration-300 border border-[#e5ded5]
            active:scale-[0.97];
+  }
+
+  .btn-danger {
+    @apply bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-6 rounded-2xl 
+           transition-all duration-300 shadow-md shadow-red-500/20 hover:shadow-lg hover:shadow-red-500/30
+           active:scale-[0.97] disabled:opacity-50;
   }
 
   .input-field {
