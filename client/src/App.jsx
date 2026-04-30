@@ -36,13 +36,22 @@ const PublicRoute = ({ children }) => {
   return user ? <Navigate to="/dashboard" replace /> : children;
 };
 
+import { useState } from 'react';
+import Sidebar from './components/Sidebar';
+
 const AppLayout = ({ children }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
   return (
-    <div className="min-h-screen bg-dark-900 bg-mesh">
-      <Navbar />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {children}
-      </main>
+    <div className="min-h-screen bg-[#f8fafc] flex">
+      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      <div className="flex-1 flex flex-col md:ml-24 transition-all duration-300">
+        <Navbar toggleSidebar={toggleSidebar} />
+        <main className="p-4 md:p-8">
+          {children}
+        </main>
+      </div>
     </div>
   );
 };
