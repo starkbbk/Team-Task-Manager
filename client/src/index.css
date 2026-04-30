@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -9,104 +11,99 @@
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background-color: #0f172a;
-  color: #e2e8f0;
+  font-family: 'Outfit', 'Inter', sans-serif;
+  background-color: #f9f4ee;
+  color: #2d2d2d;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar for light theme */
 ::-webkit-scrollbar {
   width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1e293b;
+  background: #f1ebe4;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #475569;
+  background: #dcd0c1;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #64748b;
+  background: #cbbba8;
 }
 
-/* Glassmorphism utility classes */
 @layer components {
   .glass-card {
-    @apply bg-dark-800/60 backdrop-blur-xl border border-dark-700/50 rounded-2xl;
+    @apply bg-white/70 backdrop-blur-xl border border-white/50 rounded-[24px] shadow-sm;
   }
 
   .glass-card-hover {
-    @apply glass-card transition-all duration-300 hover:border-primary-500/30 hover:shadow-lg hover:shadow-primary-500/5;
+    @apply glass-card transition-all duration-400 hover:shadow-xl hover:shadow-primary-500/5 hover:-translate-y-1;
+  }
+
+  .sidebar-glass {
+    @apply bg-[#f3ece4]/60 backdrop-blur-2xl border-r border-white/30;
   }
 
   .btn-primary {
-    @apply bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-500 hover:to-primary-400 
-           text-white font-semibold py-2.5 px-5 rounded-xl transition-all duration-300 
-           shadow-lg shadow-primary-500/25 hover:shadow-primary-500/40 
-           active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply bg-[#ff7e1a] hover:bg-[#f0670d] text-white font-semibold py-3 px-6 rounded-2xl 
+           transition-all duration-300 shadow-md shadow-primary-500/20 hover:shadow-lg hover:shadow-primary-500/30
+           active:scale-[0.97] disabled:opacity-50;
   }
 
   .btn-secondary {
-    @apply bg-dark-700 hover:bg-dark-600 text-dark-200 font-medium py-2.5 px-5 rounded-xl 
-           transition-all duration-300 border border-dark-600 hover:border-dark-500
-           active:scale-[0.98];
-  }
-
-  .btn-danger {
-    @apply bg-red-500/10 hover:bg-red-500/20 text-red-400 font-medium py-2.5 px-5 rounded-xl 
-           transition-all duration-300 border border-red-500/20 hover:border-red-500/40
-           active:scale-[0.98];
+    @apply bg-white hover:bg-[#f3ece4] text-[#2d2d2d] font-medium py-3 px-6 rounded-2xl 
+           transition-all duration-300 border border-[#e5ded5]
+           active:scale-[0.97];
   }
 
   .input-field {
-    @apply w-full bg-dark-900/80 border border-dark-600 rounded-xl px-4 py-3 text-dark-100
-           placeholder-dark-500 focus:outline-none focus:border-primary-500 focus:ring-1 
-           focus:ring-primary-500/50 transition-all duration-300;
+    @apply w-full bg-white/80 border border-[#e5ded5] rounded-2xl px-5 py-3.5 text-[#2d2d2d]
+           placeholder-[#949494] focus:outline-none focus:border-primary-500 focus:ring-4 
+           focus:ring-primary-500/10 transition-all duration-300;
   }
 
   .badge-low {
-    @apply bg-emerald-500/15 text-emerald-400 border border-emerald-500/20;
+    @apply bg-emerald-100 text-emerald-700 border border-emerald-200;
   }
 
   .badge-medium {
-    @apply bg-amber-500/15 text-amber-400 border border-amber-500/20;
+    @apply bg-orange-100 text-orange-700 border border-orange-200;
   }
 
   .badge-high {
-    @apply bg-red-500/15 text-red-400 border border-red-500/20;
+    @apply bg-red-100 text-red-700 border border-red-200;
   }
 
   .status-todo {
-    @apply bg-dark-600/50 text-dark-300;
+    @apply bg-slate-100 text-slate-600;
   }
 
   .status-in-progress {
-    @apply bg-blue-500/15 text-blue-400;
+    @apply bg-blue-100 text-blue-700;
   }
 
   .status-done {
-    @apply bg-emerald-500/15 text-emerald-400;
+    @apply bg-emerald-100 text-emerald-700;
   }
 }
 
-/* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #818cf8 0%, #6366f1 50%, #a78bfa 100%);
+  background: linear-gradient(135deg, #ff7e1a 0%, #f0670d 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Background gradient mesh */
 .bg-mesh {
   background: 
-    radial-gradient(at 20% 20%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
-    radial-gradient(at 80% 80%, rgba(139, 92, 246, 0.06) 0px, transparent 50%),
-    radial-gradient(at 50% 50%, rgba(79, 70, 229, 0.04) 0px, transparent 50%);
+    radial-gradient(at 0% 0%, rgba(255, 126, 26, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(255, 126, 26, 0.05) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(243, 236, 228, 0.5) 0px, transparent 100%);
+  background-color: #f9f4ee;
 }
+

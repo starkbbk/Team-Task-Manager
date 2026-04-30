@@ -8,34 +8,32 @@ export default {
     extend: {
       colors: {
         primary: {
-          50: '#eef2ff',
-          100: '#e0e7ff',
-          200: '#c7d2fe',
-          300: '#a5b4fc',
-          400: '#818cf8',
-          500: '#6366f1',
-          600: '#4f46e5',
-          700: '#4338ca',
-          800: '#3730a3',
-          900: '#312e81',
-          950: '#1e1b4b',
+          50: '#fff9f2',
+          100: '#ffefdb',
+          200: '#ffdbb3',
+          300: '#ffbf7d',
+          400: '#ff9d47',
+          500: '#ff7e1a', // Main amber/orange accent
+          600: '#f0670d',
+          700: '#c74e0c',
+          800: '#9e3f11',
+          900: '#7f3612',
+          950: '#451a07',
         },
-        dark: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a',
-          950: '#020617',
-        },
+        theme: {
+          bg: '#f9f4ee', // Warm cream background
+          sidebar: '#f3ece4',
+          card: '#ffffff',
+          text: {
+            main: '#2d2d2d',
+            muted: '#6b6b6b',
+            light: '#949494',
+          },
+          border: 'rgba(255, 255, 255, 0.5)',
+        }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: ['Outfit', 'Inter', 'system-ui', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-out',
