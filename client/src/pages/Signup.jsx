@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { Mail, Lock, Eye, EyeOff, User, Apple, Chrome } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const Signup = () => {
   const { signup } = useAuth();
+  const nav = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,6 +25,7 @@ const Signup = () => {
     try {
       await signup(name, email, password);
       toast.success('Account created successfully!');
+      nav('/dashboard');
     } catch (error) {
       console.error('Signup error:', error);
       toast.error(error.response?.data?.error || 'Signup failed. Check console for details.');

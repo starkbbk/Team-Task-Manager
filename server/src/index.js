@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 5000;
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100,
+  max: 1000, // generous limit for development
   standardHeaders: true,
   legacyHeaders: false,
 });

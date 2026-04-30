@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { LogIn, Mail, Lock, Eye, EyeOff, Apple, Chrome } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const Login = () => {
   const { login } = useAuth();
+  const nav = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -18,6 +19,7 @@ const Login = () => {
     try {
       await login(email, password);
       toast.success('Welcome back!');
+      nav('/dashboard');
     } catch (error) {
       console.error('Login error:', error);
       toast.error(error.response?.data?.error || 'Login failed. Please try again.');
