@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { LogIn, Mail, Lock, Eye, EyeOff, Apple, Chrome } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const Login = () => {
@@ -33,27 +33,28 @@ const Login = () => {
       <div className="bg-[#f5f2eb] w-full max-w-6xl min-h-[700px] rounded-[40px] shadow-2xl flex overflow-hidden border-[12px] border-white/30 backdrop-blur-sm">
         
         {/* Left Side: Form */}
-        <div className="w-full lg:w-1/2 p-8 md:p-16 flex flex-col justify-center relative">
-          
-
+        <div className="w-full lg:w-1/2 p-8 md:p-16 flex flex-col justify-center">
 
           <div className="max-w-md mx-auto w-full">
+            {/* Logo */}
+            <div className="inline-flex items-center gap-2 px-5 py-2 bg-white rounded-full border border-slate-200 shadow-sm mb-6">
+              <div className="w-5 h-5 bg-amber-500 rounded-full"></div>
+              <span className="font-semibold text-sm text-slate-700">Team Task Manager</span>
+            </div>
             <h1 className="text-4xl font-semibold text-slate-800 mb-2">Welcome back</h1>
             <p className="text-slate-500 mb-10">Sign in to your account to continue</p>
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-1">
                 <label className="text-xs font-medium text-slate-400 ml-5 uppercase tracking-wider">Email</label>
-                <div className="relative">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-white border-none rounded-full px-6 py-4 text-slate-700 shadow-inner focus:ring-2 focus:ring-amber-500/20 transition-all outline-none"
-                    placeholder="you@example.com"
-                    required
-                  />
-                </div>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full bg-white border-none rounded-full px-6 py-4 text-slate-700 shadow-inner focus:ring-2 focus:ring-amber-500/20 transition-all outline-none"
+                  placeholder="you@example.com"
+                  required
+                />
               </div>
 
               <div className="space-y-1">
@@ -82,32 +83,17 @@ const Login = () => {
                 disabled={loading}
                 className="w-full bg-[#fcd34d] hover:bg-[#fbbf24] text-slate-800 font-bold py-4 rounded-full transition-all duration-300 shadow-lg shadow-amber-500/20 active:scale-[0.98] disabled:opacity-50 mt-4 text-lg"
               >
-                {loading ? 'Processing...' : 'Submit'}
+                {loading ? 'Signing in...' : 'Sign In'}
               </button>
             </form>
 
-            {/* Social Login */}
-            <div className="grid grid-cols-2 gap-4 mt-8">
-              <button className="flex items-center justify-center gap-2 py-3 border border-slate-300 rounded-full hover:bg-white transition-colors text-slate-600 font-medium">
-                <Apple size={18} />
-                <span>Apple</span>
-              </button>
-              <button className="flex items-center justify-center gap-2 py-3 border border-slate-300 rounded-full hover:bg-white transition-colors text-slate-600 font-medium">
-                <Chrome size={18} />
-                <span>Google</span>
-              </button>
-            </div>
-
-            <div className="mt-10 flex justify-between text-sm">
+            <div className="mt-10 text-center text-sm">
               <p className="text-slate-500">
                 Don't have an account?{' '}
                 <Link to="/signup" className="text-slate-800 font-bold border-b border-slate-800 pb-0.5">
                   Sign up
                 </Link>
               </p>
-              <Link to="#" className="text-slate-500 border-b border-slate-300 pb-0.5">
-                Forgot password?
-              </Link>
             </div>
           </div>
         </div>
@@ -122,7 +108,7 @@ const Login = () => {
             />
             <div className="absolute inset-0 bg-black/10"></div>
             
-            {/* Mock Floating Widgets to match reference */}
+            {/* Floating Widgets */}
             <div className="absolute top-10 left-10 bg-amber-300/90 backdrop-blur px-6 py-4 rounded-2xl shadow-xl">
                <p className="text-xs font-bold text-slate-800 mb-1">Project Planning</p>
                <p className="text-[10px] text-slate-600">10:30am - 11:30am</p>
@@ -143,7 +129,6 @@ const Login = () => {
                </div>
             </div>
 
-            {/* X Close Button Mock */}
             <div className="absolute top-6 right-6 w-10 h-10 bg-white/80 backdrop-blur rounded-full flex items-center justify-center text-slate-800 shadow-lg cursor-pointer hover:bg-white transition-colors">
               <span className="text-xl">×</span>
             </div>

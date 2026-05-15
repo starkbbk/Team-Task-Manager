@@ -40,17 +40,14 @@ const Signup = () => {
       <div className="bg-[#f5f2eb] w-full max-w-6xl min-h-[700px] rounded-[40px] shadow-2xl flex overflow-hidden border-[12px] border-white/30 backdrop-blur-sm">
         
         {/* Left Side: Form */}
-        <div className="w-full lg:w-1/2 p-8 md:p-16 flex flex-col justify-center relative">
-          
-          {/* Logo Area */}
-          <div className="absolute top-10 left-10">
-            <div className="px-6 py-2 bg-white rounded-full border border-slate-200 shadow-sm flex items-center gap-2">
-              <div className="w-6 h-6 bg-amber-500 rounded-full"></div>
-              <span className="font-semibold text-slate-700">Team Task Manager</span>
-            </div>
-          </div>
+        <div className="w-full lg:w-1/2 p-8 md:p-16 flex flex-col justify-center">
 
           <div className="max-w-md mx-auto w-full">
+            {/* Logo */}
+            <div className="inline-flex items-center gap-2 px-5 py-2 bg-white rounded-full border border-slate-200 shadow-sm mb-6">
+              <div className="w-5 h-5 bg-amber-500 rounded-full"></div>
+              <span className="font-semibold text-sm text-slate-700">Team Task Manager</span>
+            </div>
             <h1 className="text-4xl font-semibold text-slate-800 mb-2">Create an account</h1>
             <p className="text-slate-500 mb-8">Join your team and start managing tasks</p>
 
