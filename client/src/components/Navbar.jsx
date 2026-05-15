@@ -26,17 +26,17 @@ const Navbar = ({ toggleSidebar }) => {
   ];
 
   return (
-    <header className="h-20 bg-white dark:bg-slate-800 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between px-6 sticky top-0 z-40 transition-colors duration-300">
-      <div className="flex items-center gap-4 flex-1">
+    <header className="h-16 md:h-20 bg-white dark:bg-slate-800 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between px-4 md:px-6 sticky top-0 z-40 transition-colors duration-300">
+      <div className="flex items-center gap-3 flex-1">
         {/* Mobile Menu Toggle */}
         <button 
           onClick={toggleSidebar}
           className="md:hidden p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-lg transition-colors"
         >
-          <Menu size={24} />
+          <Menu size={22} />
         </button>
 
-        {/* Search Bar */}
+        {/* Search Bar — hidden on small mobile */}
         <form onSubmit={handleSearch} className="relative max-w-md w-full hidden sm:block">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
           <input
@@ -50,56 +50,55 @@ const Navbar = ({ toggleSidebar }) => {
       </div>
 
       {/* Right Icons */}
-      <div className="flex items-center gap-2 md:gap-4">
-        <div className="flex items-center gap-1 md:gap-2">
+      <div className="flex items-center gap-1.5 md:gap-3">
+        <button 
+          onClick={(e) => toggleTheme(e)}
+          className="p-2 md:p-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-full transition-all"
+          title={isDark ? 'Light mode' : 'Dark mode'}
+        >
+          {isDark ? <Sun size={18} /> : <Moon size={18} />}
+        </button>
+
+        <div className="relative">
           <button 
-            onClick={(e) => toggleTheme(e)}
-            className="p-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-full transition-all"
-            title={isDark ? 'Light mode' : 'Dark mode'}
+            onClick={() => setShowNotif(!showNotif)}
+            className="p-2 md:p-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-full transition-all relative"
           >
-            {isDark ? <Sun size={20} /> : <Moon size={20} />}
+            <Bell size={18} />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-800"></span>
           </button>
-          <div className="relative">
-            <button 
-              onClick={() => setShowNotif(!showNotif)}
-              className="p-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-full transition-all relative"
-            >
-              <Bell size={20} />
-              <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-800"></span>
-            </button>
-            {/* Notification Dropdown */}
-            {showNotif && (
-              <>
-                <div className="fixed inset-0 z-40" onClick={() => setShowNotif(false)} />
-                <div className="absolute right-0 top-12 w-80 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 z-50 overflow-hidden">
-                  <div className="p-4 border-b border-slate-100 dark:border-slate-700">
-                    <p className="font-bold text-sm text-slate-800 dark:text-slate-200">Notifications</p>
-                  </div>
-                  <div className="max-h-64 overflow-y-auto">
-                    {notifications.map(n => (
-                      <div key={n.id} className="px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer transition-colors border-b border-slate-50 dark:border-slate-700 last:border-0">
-                        <p className="text-sm text-slate-700 dark:text-slate-300">{n.text}</p>
-                        <p className="text-[10px] text-slate-400 mt-1">{n.time}</p>
-                      </div>
-                    ))}
-                  </div>
+          {/* Notification Dropdown */}
+          {showNotif && (
+            <>
+              <div className="fixed inset-0 z-40" onClick={() => setShowNotif(false)} />
+              <div className="absolute right-0 top-12 w-72 md:w-80 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 z-50 overflow-hidden">
+                <div className="p-4 border-b border-slate-100 dark:border-slate-700">
+                  <p className="font-bold text-sm text-slate-800 dark:text-slate-200">Notifications</p>
                 </div>
-              </>
-            )}
-          </div>
+                <div className="max-h-64 overflow-y-auto">
+                  {notifications.map(n => (
+                    <div key={n.id} className="px-4 py-3 hover:bg-slate-50 dark:hover:bg-slate-700 cursor-pointer transition-colors border-b border-slate-50 dark:border-slate-700 last:border-0">
+                      <p className="text-sm text-slate-700 dark:text-slate-300">{n.text}</p>
+                      <p className="text-[10px] text-slate-400 mt-1">{n.time}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
         {/* User Profile */}
-        <div className="flex items-center gap-3 pl-4 border-l border-slate-100 dark:border-slate-700 ml-2 relative">
+        <div className="flex items-center gap-2 md:gap-3 pl-2 md:pl-4 border-l border-slate-100 dark:border-slate-700 ml-1 md:ml-2 relative">
           <div className="text-right hidden sm:block">
             <p className="text-sm font-bold text-slate-800 dark:text-slate-200 leading-none mb-1">{user?.name || 'User'}</p>
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">{user?.role || 'Member'}</p>
           </div>
           <div 
             onClick={() => setShowUserMenu(!showUserMenu)}
-            className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 border-2 border-amber-500/20 overflow-hidden cursor-pointer hover:border-amber-500/50 transition-colors flex items-center justify-center"
+            className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 border-2 border-amber-500/20 overflow-hidden cursor-pointer hover:border-amber-500/50 transition-colors flex items-center justify-center"
           >
-            <span className="text-amber-700 dark:text-amber-400 font-bold text-sm">{user?.name?.charAt(0)?.toUpperCase() || 'U'}</span>
+            <span className="text-amber-700 dark:text-amber-400 font-bold text-xs md:text-sm">{user?.name?.charAt(0)?.toUpperCase() || 'U'}</span>
           </div>
 
           {/* User dropdown */}

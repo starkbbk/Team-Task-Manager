@@ -48,9 +48,9 @@ const AppLayout = ({ children }) => {
   return (
     <div className="min-h-screen bg-[#f8fafc] dark:bg-slate-900 flex transition-colors duration-300">
       <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-      <div className="flex-1 flex flex-col md:ml-24 transition-all duration-300">
+      <div className="flex-1 flex flex-col ml-0 md:ml-24 transition-all duration-300">
         <Navbar toggleSidebar={toggleSidebar} />
-        <main className="p-4 md:p-8">
+        <main className="p-3 sm:p-4 md:p-8 pb-20 md:pb-8">
           {children}
         </main>
       </div>
