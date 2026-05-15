@@ -2,26 +2,24 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
+import { useState } from 'react';
 import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
 import ProjectDetail from './pages/ProjectDetail';
-import Messages from './pages/Messages';
-import Chat from './pages/Chat';
 import Tasks from './pages/Tasks';
-import CalendarPage from './pages/CalendarPage';
 import Analytics from './pages/Analytics';
-import Settings from './pages/Settings';
 
 const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
   
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-dark-900">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500"></div>
+      <div className="min-h-screen flex items-center justify-center bg-[#f8fafc] dark:bg-slate-900">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-500"></div>
       </div>
     );
   }
@@ -34,17 +32,14 @@ const PublicRoute = ({ children }) => {
   
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-dark-900">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary-500"></div>
+      <div className="min-h-screen flex items-center justify-center bg-[#f8fafc] dark:bg-slate-900">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-500"></div>
       </div>
     );
   }
   
   return user ? <Navigate to="/dashboard" replace /> : children;
 };
-
-import { useState } from 'react';
-import Sidebar from './components/Sidebar';
 
 const AppLayout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -80,7 +75,7 @@ function App() {
             },
             success: {
               iconTheme: {
-                primary: '#6366f1',
+                primary: '#f59e0b',
                 secondary: '#e2e8f0',
               },
             },
@@ -110,34 +105,14 @@ function App() {
               <AppLayout><ProjectDetail /></AppLayout>
             </ProtectedRoute>
           } />
-          <Route path="/messages" element={
-            <ProtectedRoute>
-              <AppLayout><Messages /></AppLayout>
-            </ProtectedRoute>
-          } />
-          <Route path="/chat" element={
-            <ProtectedRoute>
-              <AppLayout><Chat /></AppLayout>
-            </ProtectedRoute>
-          } />
           <Route path="/tasks" element={
             <ProtectedRoute>
               <AppLayout><Tasks /></AppLayout>
             </ProtectedRoute>
           } />
-          <Route path="/calendar" element={
-            <ProtectedRoute>
-              <AppLayout><CalendarPage /></AppLayout>
-            </ProtectedRoute>
-          } />
           <Route path="/analytics" element={
             <ProtectedRoute>
               <AppLayout><Analytics /></AppLayout>
-            </ProtectedRoute>
-          } />
-          <Route path="/settings" element={
-            <ProtectedRoute>
-              <AppLayout><Settings /></AppLayout>
             </ProtectedRoute>
           } />
           <Route path="/" element={<Navigate to="/dashboard" replace />} />

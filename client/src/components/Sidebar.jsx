@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { Home, FolderKanban, MessageSquare, ListTodo, Calendar, BarChart3, Settings, LogOut, Mail, GraduationCap } from 'lucide-react';
+import { Home, FolderKanban, ListTodo, BarChart3, LogOut, ClipboardList } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
@@ -7,20 +7,16 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   const menuItems = [
     { icon: <Home size={22} />, label: 'Dashboard', path: '/dashboard' },
-    { icon: <Mail size={22} />, label: 'Messages', path: '/messages' },
     { icon: <FolderKanban size={22} />, label: 'Projects', path: '/projects' },
-    { icon: <MessageSquare size={22} />, label: 'Chat', path: '/chat' },
     { icon: <ListTodo size={22} />, label: 'Tasks', path: '/tasks' },
-    { icon: <Calendar size={22} />, label: 'Calendar', path: '/calendar' },
     { icon: <BarChart3 size={22} />, label: 'Analytics', path: '/analytics' },
-    { icon: <Settings size={22} />, label: 'Settings', path: '/settings' },
   ];
 
   return (
     <aside className={`fixed top-0 left-0 h-full bg-white dark:bg-slate-800 border-r border-slate-100 dark:border-slate-700 transition-all duration-300 z-50 ${isOpen ? 'w-20' : 'w-0 -translate-x-full'} md:w-24 md:translate-x-0 flex flex-col items-center py-6 shadow-sm`}>
       {/* Logo */}
       <div className="mb-10 text-amber-500">
-        <GraduationCap size={32} strokeWidth={2.5} />
+        <ClipboardList size={32} strokeWidth={2.5} />
       </div>
 
       {/* Menu Items */}

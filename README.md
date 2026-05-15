@@ -1,6 +1,6 @@
 # 🚀 Team Task Manager
 
-A full-stack, role-based team task management system built with Node.js, Express, React, PostgreSQL, and Prisma.
+A full-stack, role-based team task management system built with **Node.js, Express, React, PostgreSQL, and Prisma**. Deployed on **Railway**.
 
 ## ✨ Features
 
@@ -9,8 +9,10 @@ A full-stack, role-based team task management system built with Node.js, Express
 - **Project Management** — Create, edit, delete projects; invite members by email
 - **Task Management** — Create, assign, update, delete tasks with priority & due dates
 - **Task Status Flow** — Todo → In Progress → Done
-- **Dashboard** — Personal stats, task progress, overdue alerts
-- **Responsive UI** — Dark theme, glassmorphism design, mobile-friendly
+- **Dashboard** — Personal stats, task progress, overdue alerts, team overview
+- **Analytics** — Task distribution, completion rate visualizations
+- **Dark Mode** — Full dark theme support with smooth circle transition animation
+- **Responsive UI** — Clean design, mobile-friendly
 
 ## 🛠️ Tech Stack
 
@@ -56,6 +58,7 @@ A full-stack, role-based team task management system built with Node.js, Express
 │   │   ├── App.jsx
 │   │   └── main.jsx
 │   └── index.html
+├── railway.toml
 └── README.md
 ```
 
@@ -142,20 +145,19 @@ Visit `http://localhost:5173`
 
 1. Push code to GitHub
 2. Create a new Railway project
-3. Add PostgreSQL plugin
-4. Add a new service from your GitHub repo (server)
+3. Add **PostgreSQL plugin** from Railway
+4. Add a new service from your GitHub repo
 5. Set environment variables:
-   - `DATABASE_URL` (from PostgreSQL plugin)
-   - `JWT_SECRET`
-   - `PORT=5000`
-   - `FRONTEND_URL`
-   - `NODE_ENV=production`
-6. Set build command: `npm install && npm run build && cd ../client && npm install && npm run build`
-7. Set start command: `npm start`
+   - `DATABASE_URL` — auto-provided by Railway PostgreSQL plugin
+   - `JWT_SECRET` — any strong secret string
+   - `PORT` — `5000`
+   - `NODE_ENV` — `production`
+   - `FRONTEND_URL` — your Railway app URL
+6. Railway auto-detects `railway.toml` for build/start commands
 
 ## 🔗 Live URL
 
-**Deployed at:** [Coming Soon — Railway Deployment]
+**Deployed at:** [https://team-task-manager-production-cdcf.up.railway.app](https://team-task-manager-production-cdcf.up.railway.app)
 
 ## 📄 License
 

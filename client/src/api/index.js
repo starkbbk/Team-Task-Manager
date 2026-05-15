@@ -1,10 +1,9 @@
 import axios from 'axios';
 
+// In production (Railway), frontend is served by the same Express server,
+// so API calls go to same origin (no VITE_API_URL needed).
+// In development, VITE_API_URL points to the local backend.
 const API_BASE_URL = import.meta.env.VITE_API_URL || '';
-
-if (import.meta.env.DEV) {
-  console.log('🔌 Connecting to API at:', API_BASE_URL || 'Local Proxy');
-}
 
 const api = axios.create({
   baseURL: `${API_BASE_URL}/api`,

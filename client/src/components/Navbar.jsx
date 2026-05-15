@@ -1,28 +1,21 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Bell, MessageCircle, Moon, Sun, Maximize, Settings2, Menu } from 'lucide-react';
+import { Search, Bell, Moon, Sun, Menu, LogOut } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 
 const Navbar = ({ toggleSidebar }) => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const { isDark, toggleTheme } = useTheme();
   const nav = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [showNotif, setShowNotif] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       nav('/projects');
-    }
-  };
-
-  const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(() => {});
-    } else {
-      document.exitFullscreen().catch(() => {});
     }
   };
 
@@ -48,7 +41,7 @@ const Navbar = ({ toggleSidebar }) => {
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
           <input
             type="text"
-            placeholder="Search"
+            placeholder="Search projects..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full bg-[#f8fafc] dark:bg-slate-700 border-none rounded-xl py-2.5 pl-12 pr-4 text-sm text-slate-600 dark:text-slate-200 focus:ring-2 focus:ring-amber-500/10 outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500"
@@ -90,57 +83,43 @@ const Navbar = ({ toggleSidebar }) => {
                       </div>
                     ))}
                   </div>
-                  <div className="p-3 border-t border-slate-100 dark:border-slate-700">
-                    <button 
-                      onClick={() => { setShowNotif(false); nav('/settings'); }}
-                      className="text-xs font-bold text-amber-500 hover:text-amber-600 w-full text-center"
-                    >
-                      View All Notifications
-                    </button>
-                  </div>
                 </div>
               </>
             )}
           </div>
-          <button 
-            onClick={() => nav('/chat')}
-            className="p-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-full transition-all hidden sm:flex"
-            title="Chat"
-          >
-            <MessageCircle size={20} />
-          </button>
-          <button 
-            onClick={toggleFullscreen}
-            className="p-2.5 text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-full transition-all hidden md:flex"
-            title="Fullscreen"
-          >
-            <Maximize size={20} />
-          </button>
         </div>
 
         {/* User Profile */}
-        <div className="flex items-center gap-3 pl-4 border-l border-slate-100 dark:border-slate-700 ml-2">
+        <div className="flex items-center gap-3 pl-4 border-l border-slate-100 dark:border-slate-700 ml-2 relative">
           <div className="text-right hidden sm:block">
             <p className="text-sm font-bold text-slate-800 dark:text-slate-200 leading-none mb-1">{user?.name || 'User'}</p>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Admin</p>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Member</p>
           </div>
           <div 
-            onClick={() => nav('/settings')}
-            className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 border-2 border-amber-500/20 overflow-hidden cursor-pointer hover:border-amber-500/50 transition-colors"
+            onClick={() => setShowUserMenu(!showUserMenu)}
+            className="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/30 border-2 border-amber-500/20 overflow-hidden cursor-pointer hover:border-amber-500/50 transition-colors flex items-center justify-center"
           >
-            <img 
-              src={`https://i.pravatar.cc/150?u=${user?.id || 'admin'}`} 
-              alt="Avatar" 
-              className="w-full h-full object-cover"
-            />
+            <span className="text-amber-700 dark:text-amber-400 font-bold text-sm">{user?.name?.charAt(0)?.toUpperCase() || 'U'}</span>
           </div>
-          <button 
-            onClick={() => nav('/settings')}
-            className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
-            title="Settings"
-          >
-            <Settings2 size={18} />
-          </button>
+
+          {/* User dropdown */}
+          {showUserMenu && (
+            <>
+              <div className="fixed inset-0 z-40" onClick={() => setShowUserMenu(false)} />
+              <div className="absolute right-0 top-14 w-48 bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-700 z-50 overflow-hidden">
+                <div className="p-4 border-b border-slate-100 dark:border-slate-700">
+                  <p className="text-sm font-bold text-slate-800 dark:text-slate-200">{user?.name}</p>
+                  <p className="text-[11px] text-slate-400 truncate">{user?.email}</p>
+                </div>
+                <button
+                  onClick={() => { setShowUserMenu(false); logout(); }}
+                  className="w-full px-4 py-3 text-left text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors flex items-center gap-2 font-medium"
+                >
+                  <LogOut size={16} /> Logout
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </header>
