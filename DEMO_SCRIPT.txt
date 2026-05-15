@@ -1,0 +1,220 @@
+============================================================
+  TEAM TASK MANAGER — DEMO VIDEO SCRIPT
+============================================================
+
+Duration: 4-5 minutes
+Tip: Screen record karo (QuickTime/OBS) aur saath mein bolo
+
+
+------------------------------------------------------------
+PART 1: INTRODUCTION (30 sec)
+------------------------------------------------------------
+
+"Hello everyone, I'm going to demonstrate my Team Task Manager 
+application. This is a full-stack web application where multiple 
+users can create projects, assign tasks, and track progress — 
+similar to tools like Trello or Asana.
+
+The tech stack I've used is:
+- React with Vite for the frontend
+- Node.js with Express for the backend
+- PostgreSQL with Prisma ORM for the database
+- JWT for authentication
+- And it's deployed on Railway."
+
+
+------------------------------------------------------------
+PART 2: SIGNUP & ROLE SELECTION (45 sec)
+------------------------------------------------------------
+
+[Screen: Open the signup page]
+
+"Let me start by creating an account. As you can see, the signup 
+form asks for Name, Email, and Password.
+
+What's important here is the Role Selection — users can choose 
+between Admin or Member.
+
+- Admin can create projects, manage members, create and assign tasks
+- Member can only view projects and update task status on tasks 
+  assigned to them
+
+Let me sign up as an Admin first."
+
+[Fill form, select Admin, click Create Account]
+
+"Great — account created successfully, and I'm redirected to 
+the Dashboard."
+
+
+------------------------------------------------------------
+PART 3: DASHBOARD OVERVIEW (30 sec)
+------------------------------------------------------------
+
+[Screen: Dashboard page]
+
+"This is the main Dashboard. It shows:
+- Total projects count
+- Tasks in progress and completed
+- Completion rate percentage
+- A task distribution bar chart showing To Do, In Progress, and Done
+- Recent projects list
+- And team members overview
+
+Everything here is real-time data from the database."
+
+
+------------------------------------------------------------
+PART 4: CREATE PROJECT (30 sec)
+------------------------------------------------------------
+
+[Screen: Click "New Project" button]
+
+"Let me create a new project. I'll call it 'Website Redesign' 
+with a description.
+
+Since I created this project, I'm automatically assigned as the 
+Admin of this project."
+
+[Submit and show project created]
+
+
+------------------------------------------------------------
+PART 5: ADD TEAM MEMBER (45 sec)
+------------------------------------------------------------
+
+[Screen: Inside the project]
+
+"Now, as Admin, I can add members to this project. Let me click 
+'Add' and enter a member's email address.
+
+This user must already have an account in the system. Once added, 
+they'll see this project in their dashboard.
+
+As you can see, members are listed here with their roles — I'm 
+shown as Admin, and the new member is shown as Member."
+
+[Show the members section]
+
+
+------------------------------------------------------------
+PART 6: CREATE & ASSIGN TASKS (1 min)
+------------------------------------------------------------
+
+[Screen: Click "Add Task"]
+
+"Now let me create some tasks. I'll add a task called 
+'Design Homepage' with:
+- Description: 'Create wireframes for the new homepage'
+- Assign it to our team member
+- Set Priority to High
+- Set a Due Date
+
+Let me create one more task — 'Setup Database' with Medium 
+priority."
+
+[Create 2-3 tasks]
+
+"As you can see, tasks are displayed as cards showing the title, 
+assignee, due date, priority badge, and current status.
+
+The status flow is: To Do → In Progress → Done. 
+I can click 'Start' to move it to In Progress, and then 
+'Complete' to mark it as Done."
+
+[Click status buttons to demo the flow]
+
+
+------------------------------------------------------------
+PART 7: TASK FILTERS (20 sec)
+------------------------------------------------------------
+
+[Screen: Show filter buttons - All, To Do, In Progress, Done]
+
+"I can also filter tasks by their status. Let me click 
+'In Progress' to see only active tasks, and 'Done' to see 
+completed ones."
+
+[Click filter buttons]
+
+
+------------------------------------------------------------
+PART 8: ALL TASKS VIEW (20 sec)
+------------------------------------------------------------
+
+[Screen: Navigate to Tasks page from sidebar]
+
+"The Tasks page shows all tasks across all projects in a 
+table format. I can see the task name, which project it belongs 
+to, status, priority, and assignee — all in one view.
+
+I can filter here as well."
+
+
+------------------------------------------------------------
+PART 9: ANALYTICS (20 sec)
+------------------------------------------------------------
+
+[Screen: Navigate to Analytics page from sidebar]
+
+"The Analytics page gives an overview of team performance with:
+- Total projects, tasks, completed count
+- Task distribution bar chart
+- And a completion rate circle chart
+
+This helps track overall progress at a glance."
+
+
+------------------------------------------------------------
+PART 10: ROLE-BASED ACCESS (30 sec)
+------------------------------------------------------------
+
+"Now let me quickly show the Role-Based Access Control. 
+
+As an Admin, I have full access — I can create, edit, and delete 
+projects and tasks, and manage team members.
+
+If I log in as a Member, I can only view projects I'm part of 
+and update the status of tasks assigned to me. I cannot create 
+new tasks, edit the project, or add/remove members.
+
+This ensures proper access control within teams."
+
+
+------------------------------------------------------------
+PART 11: DARK MODE & RESPONSIVE (15 sec)
+------------------------------------------------------------
+
+[Screen: Toggle dark mode]
+
+"The application also supports Dark Mode with a smooth transition 
+animation, and it's fully responsive — works on both desktop 
+and mobile devices."
+
+
+------------------------------------------------------------
+PART 12: DEPLOYMENT (20 sec)
+------------------------------------------------------------
+
+"The application is deployed on Railway. The Express server 
+serves both the API and the React build in production. 
+
+The live link is: team-task-manager-production-cdcf.up.railway.app
+
+PostgreSQL database is also hosted on Railway.
+
+That's the complete demo of my Team Task Manager application. 
+Thank you!"
+
+
+============================================================
+  END OF SCRIPT
+============================================================
+
+RECORDING TIPS:
+1. Use QuickTime Player → File → New Screen Recording
+2. Select "Internal Microphone" for audio
+3. Record at 1080p if possible
+4. Keep mouse movements slow and deliberate
+5. Pause 1-2 seconds between sections
+6. Save as .mp4 or .mov format
