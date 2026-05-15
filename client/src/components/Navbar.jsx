@@ -93,7 +93,7 @@ const Navbar = ({ toggleSidebar }) => {
         <div className="flex items-center gap-3 pl-4 border-l border-slate-100 dark:border-slate-700 ml-2 relative">
           <div className="text-right hidden sm:block">
             <p className="text-sm font-bold text-slate-800 dark:text-slate-200 leading-none mb-1">{user?.name || 'User'}</p>
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Member</p>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">{user?.role || 'Member'}</p>
           </div>
           <div 
             onClick={() => setShowUserMenu(!showUserMenu)}

@@ -8,7 +8,7 @@ const prisma = require('../lib/prisma');
  */
 const signup = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     // Validation
     if (!name || !email || !password) {
@@ -30,6 +30,10 @@ const signup = async (req, res) => {
       return res.status(400).json({ error: 'Password must be at least 8 characters long.' });
     }
 
+    // Validate role
+    const validRoles = ['ADMIN', 'MEMBER'];
+    const userRole = role && validRoles.includes(role.toUpperCase()) ? role.toUpperCase() : 'MEMBER';
+
     // Check for duplicate email
     const existingUser = await prisma.user.findUnique({
       where: { email: email.toLowerCase().trim() },
@@ -49,11 +53,13 @@ const signup = async (req, res) => {
         name: name.trim(),
         email: email.toLowerCase().trim(),
         password: hashedPassword,
+        role: userRole,
       },
       select: {
         id: true,
         name: true,
         email: true,
+        role: true,
         createdAt: true,
       },
     });
@@ -117,6 +123,7 @@ const login = async (req, res) => {
         id: user.id,
         name: user.name,
         email: user.email,
+        role: user.role,
       },
       token,
     });
@@ -138,6 +145,7 @@ const getMe = async (req, res) => {
         id: true,
         name: true,
         email: true,
+        role: true,
         createdAt: true,
       },
     });
